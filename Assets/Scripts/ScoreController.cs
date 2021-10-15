@@ -24,5 +24,10 @@ public class ScoreController : MonoBehaviour
 
         scoreArea.text = _score.ToString();
     }
+
+    private void OnDestroy()
+    {
+        GameEventSystem.Current.onIncreaseScore -= OnIncreseScore;
+    }
 }
 

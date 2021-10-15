@@ -25,12 +25,19 @@ public class GameEventSystem : MonoBehaviour
             onIncreaseScore();
     }
 
-    public event Action<RPS> onCardSelected;
 
+    public event Action<RPS> onCardSelected;
     public void CardSelected(RPS rps)
     {
-        Debug.Log(rps);
         if (onCardSelected != null)
             onCardSelected(rps);
+    }
+
+
+    public event Action<RPS> onWheelStopped;
+    public void WheelStopped(RPS rotation)
+    {
+        if (onWheelStopped != null)
+            onWheelStopped(rotation);
     }
 }

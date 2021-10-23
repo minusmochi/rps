@@ -9,6 +9,8 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
+        RPS UserSelection;
+        RPS WheelSelection;
         public void Awake()
         {
             GameEventSystem.Current.onCardSelected += CardClicked;
@@ -17,13 +19,12 @@ namespace Assets.Scripts
 
         public void CardClicked(RPS usersPick)
         {
-            Debug.Log("User selected");
-            Debug.Log(usersPick);
+            Debug.Log("User selected " + usersPick);
         }
 
-        public void WheelStopped(RPS wheelPick) {
-            Debug.Log("Wheel stopped");
-            Debug.Log(wheelPick);
+        public void WheelStopped(RPS wheelPick)
+        {
+            Debug.Log("Wheel stopped: " + wheelPick);
         }
 
         public void OnDestroy()

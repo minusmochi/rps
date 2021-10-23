@@ -1,7 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum RPS
+{
+    Rock,
+    Paper,
+    Sissors
+}
 
 public class GameEventSystem : MonoBehaviour
 {
@@ -18,5 +23,14 @@ public class GameEventSystem : MonoBehaviour
     {
         if (onIncreaseScore != null)
             onIncreaseScore();
+    }
+
+    public event Action<RPS> onCardSelected;
+
+    public void CardSelected(RPS rps)
+    {
+        Debug.Log(rps);
+        if (onCardSelected != null)
+            onCardSelected(rps);
     }
 }

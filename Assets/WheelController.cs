@@ -33,6 +33,7 @@ public class WheelController : MonoBehaviour
         {
             case WheelState.Spinning:
                 rotate();
+                Debug.Log(ToDegree(transform.rotation.z));
                 break;
             case WheelState.Slowing:
                 rotate();
@@ -40,13 +41,14 @@ public class WheelController : MonoBehaviour
                 if (spinSpeed < 0.5)
                 {
                     spinSpeed = 0;
-                    GameEventSystem.Current.WheelStopped(RPS.Rock);
+                    GameEventSystem.Current.WheelStopped(CheckPosition());
                     _state = WheelState.Stopped;
                 }
                 else
                 {
                     spinSpeed *= 0.98f;
                 }
+                Debug.Log(transform.rotation.z);
                 break;
             case WheelState.Stopped:
                 break;
@@ -70,5 +72,25 @@ public class WheelController : MonoBehaviour
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
     }
 
+    private RPS CheckPosition()
+    {
+        var degrees = ToDegree(transform.rotation.z);
+        if (degrees >= 0 && degrees <= 120)
+        {
+            return RPS.Rock;
+        }else if(degrees > 120 && degrees <= 240)
+        {
+            return RPS.Paper;
+        }
+        else
+        {
+            return RPS.Sissors;
+        }
+        
+    }
 
+    private float ToDegree(float quoteQuetern)
+    {
+        return ((quoteQuetern + 1) / 2) * 360;
+    }
 }

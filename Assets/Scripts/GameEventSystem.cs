@@ -1,13 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum RPS
-{
-    Rock,
-    Paper,
-    Sissors
-}
-
 public class GameEventSystem : MonoBehaviour
 {
     public uint Score = 0;

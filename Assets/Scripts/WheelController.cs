@@ -1,22 +1,13 @@
+using Assets.Scripts.helper;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum WheelState
-{
-    Spinning,
-    Slowing,
-    Stopped,
-    Restarting
-}
 public class WheelController : MonoBehaviour
 {
     public float runningSpeed = 2;
 
     private WheelState _state = WheelState.Spinning;
     private float spinSpeed = 5;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +31,7 @@ public class WheelController : MonoBehaviour
                 if (spinSpeed < 0.5)
                 {
                     spinSpeed = 0;
-                    GameEventSystem.Current.WheelStopped(RPS.Rock);
+                    GameEventSystem.Current.WheelStopped(CheckPosition());
                     _state = WheelState.Stopped;
                 }
                 else
@@ -70,5 +61,24 @@ public class WheelController : MonoBehaviour
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
     }
 
+    private RPS CheckPosition()
+    {
+        var degrees = RotationHelper.ToDegree(transform.rotation.z);
 
+        if (degrees >= 0 && degrees <= 120)
+        {
+            return RPS.Rock;
+        }
+        else if (degrees > 120 && degrees <= 240)
+        {
+            return RPS.Paper;
+        }
+        else
+        {
+            return RPS.Sissors;
+        }
+
+    }
+
+    
 }

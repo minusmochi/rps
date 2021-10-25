@@ -9,6 +9,13 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
+        Dictionary<RPS, RPS> _winners = new Dictionary<RPS, RPS> {
+            { RPS.Paper, RPS.Rock },
+            { RPS.Rock, RPS.Sissors },
+            { RPS.Sissors, RPS.Paper }
+        };
+        RPS _userSelection;
+        RPS _wheelSelection;
         public void Awake()
         {
             GameEventSystem.Current.onCardSelected += CardClicked;
@@ -17,13 +24,27 @@ namespace Assets.Scripts
 
         public void CardClicked(RPS usersPick)
         {
-            Debug.Log("User selected");
-            Debug.Log(usersPick);
+            _userSelection = usersPick;
+            Debug.Log("User selected " + usersPick);
         }
 
-        public void WheelStopped(RPS wheelPick) {
-            Debug.Log("Wheel stopped");
-            Debug.Log(wheelPick);
+        public void WheelStopped(RPS wheelPick)
+        {
+            _wheelSelection = wheelPick;
+            Debug.Log("Wheel stopped: " + wheelPick);
+
+            CheckResult();
+        }
+
+        private void CheckResult()
+        {
+            var winningPick = _winners[_userSelection];
+
+            if(_wheelSelection == winningPick)
+            {
+                GameEventSystem.Current.IncreaseScore();
+            }
+                
         }
 
         public void OnDestroy()
